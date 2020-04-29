@@ -11806,11 +11806,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aleve\\source\\repos\\LAB_REPOS\\LAB_REPOS\\LAB_REPOS.csproj",
+      "projectUniqueName": "C:\\Users\\aleve\\Desktop\\REPOS_ED\\LAB_REPOS\\LAB_REPOS.csproj",
       "projectName": "LAB_REPOS",
-      "projectPath": "C:\\Users\\aleve\\source\\repos\\LAB_REPOS\\LAB_REPOS\\LAB_REPOS.csproj",
+      "projectPath": "C:\\Users\\aleve\\Desktop\\REPOS_ED\\LAB_REPOS\\LAB_REPOS.csproj",
       "packagesPath": "C:\\Users\\aleve\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aleve\\source\\repos\\LAB_REPOS\\LAB_REPOS\\obj\\",
+      "outputPath": "C:\\Users\\aleve\\Desktop\\REPOS_ED\\LAB_REPOS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
