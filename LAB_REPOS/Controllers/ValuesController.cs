@@ -125,5 +125,14 @@ namespace LAB_REPOS.Controllers
             LZW.dictionary_initial(arch1);
             LZW.compression_process(arch1, arch);
         }
+        [Route("Descompresionlzw")]
+        [HttpPost]
+        public void DescomprimirLZW([FromForm] IFormFile Nombre)
+        {
+            LZW LZW = new LZW();
+            var arch = Path.GetFullPath(Nombre.FileName);
+            var arch1 = new FileStream(arch, FileMode.Open);
+            LZW.descompression(Nombre.FileName);
+        }
     }
 }
