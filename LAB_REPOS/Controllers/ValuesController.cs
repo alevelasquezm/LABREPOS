@@ -29,7 +29,10 @@ namespace LAB_REPOS.Controllers
 
         
         //-----------------------------------------------------ENDPOINTS PARA LAB DE CIFRADOS ZIGZAG, CESAR, DE RUTA------------------------------------------------------
-        // POST api/Cesar
+       
+            
+                                                                          // C E S A R      
+            // POST api/Cesar
         [Route("CifradoCesar")]
         [HttpPost]
         public void PostCifradoCesar([FromBody] string file, string key)
@@ -48,6 +51,46 @@ namespace LAB_REPOS.Controllers
             var lecture = Path.GetFullPath("Descifrado");
             var lecture2 = Path.GetFullPath(file);
             CESAR.message_d(file, lecture, key);
+
+        }
+                                                                           //ZIGZAG
+        // POST api/ZigZag
+        [Route("CifradoZigZag")]
+        [HttpPost]
+        public void PostCifradoZigZag([FromBody] string file, int level)
+        {
+            ZigZag_Encryption ZigZag = new ZigZag_Encryption();
+            var lecture = Path.GetFullPath("Cifrado");
+            var lecture2 = Path.GetFullPath(file);
+            var BytesList = ZigZag.encryption(file, level);
+            var AddExtraC = 0;
+            var Matrix = ZigZag.matrix(BytesList.Count(), level, ref AddExtraC);
+            var ExtraCharacter = new byte();
+            if (AddExtraC > BytesList.Count())
+            {
+                BytesList = ZigZag.add_extra_c(BytesList, AddExtraC, ref ExtraCharacter);
+            }
+            ZigZag.message(Matrix, level, lecture, BytesList, ExtraCharacter);
+
+        }
+        [Route("DescifradoZigZag")]
+        [HttpPost]
+        public void PostDescifradoZigZag([FromBody] string file, int level)
+        {
+            ZigZag_Encryption ZigZag = new ZigZag_Encryption();
+            var lecture = Path.GetFullPath("Descifrado");
+            var lecture2 = Path.GetFullPath(file);
+            var ExtraC = new byte();
+            var BytesList = ZigZag.decryption(file, level, ref ExtraC);
+            var AddExtraC = 0;
+            var Matrix = ZigZag.matrix_dec(BytesList.Count(), level, ref AddExtraC);
+            var AddCharacter2 = new byte();
+            if (AddExtraC > BytesList.Count())
+            {
+                BytesList = ZigZag.add_extra_c(BytesList, AddExtraC, ref AddCharacter2);
+            }
+
+            ZigZag.message_dec(lecture, level, BytesList, Matrix, ExtraC);
 
         }
 
