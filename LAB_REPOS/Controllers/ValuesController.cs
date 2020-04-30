@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using LAB_REPOS.MEJORES_5.CIFRADOS;
 
 namespace LAB_REPOS.Controllers
 {
@@ -21,25 +23,33 @@ namespace LAB_REPOS.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
+
             return "value";
         }
 
-        // POST api/values
+        
+        //-----------------------------------------------------ENDPOINTS PARA LAB DE CIFRADOS ZIGZAG, CESAR, DE RUTA------------------------------------------------------
+        // POST api/Cesar
+        [Route("CifradoCesar")]
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void PostCifradoCesar([FromBody] string file, string key)
         {
+            Cesar_Encryption CESAR = new Cesar_Encryption();
+            var lecture = Path.GetFullPath("Cifrado");
+            var lecture2 = Path.GetFullPath(file);
+            CESAR.message(lecture, file, key);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [Route("DescifradoCesar")]
+        [HttpPost]
+        public void PostDescifradoCesar([FromBody]string file, string key)
         {
+            Cesar_Encryption CESAR = new Cesar_Encryption();
+            var lecture = Path.GetFullPath("Descifrado");
+            var lecture2 = Path.GetFullPath(file);
+            CESAR.message_d(file, lecture, key);
+
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
