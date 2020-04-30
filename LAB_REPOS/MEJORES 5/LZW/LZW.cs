@@ -13,14 +13,30 @@ namespace LAB_REPOS.MEJORES_5.LZW
         //Llenar diccionario.
         public void dictionary_initial(FileStream file)
         {
-            //var split = Nombre.Split('.');
-            // bytes_original = file.ContentLength;
             List<int> initial_list = new List<int>();
             Dictionary<string, int> Base = new Dictionary<string, int>();
             var length = 0;
             //Leer archivo.
-            //Stream stream = file.InputStream;
             length = 1000;
+            //Lee numeros binarios.
+            using (var reader = new BinaryReader(file))
+            {
+                var bytes = new byte[length];
+                while (reader.BaseStream.Position != reader.BaseStream.Length)
+                {
+                    //Leer bytes.
+                    bytes = reader.ReadBytes(length);
+                    for (int x = 0; x < bytes.Length; x++)
+                    {
+                        //Lista inicial contiene la informacion.
+                        if (!initial_list.Contains(bytes[x]))
+                        {
+                            initial_list.Add(bytes[x]);
+                            bytes_compression++;
+                        }
+                    }
+                }
+            }
         }
     }
 }
