@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="MEJORES 5\LZW\" />
     <Folder Include="MEJORES 5\ARBOL B\" />
     <Folder Include="MEJORES 5\HUFFMAN\" />
     <Folder Include="MEJORES 5\RSA\" />
