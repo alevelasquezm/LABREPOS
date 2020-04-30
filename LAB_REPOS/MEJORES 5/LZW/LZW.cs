@@ -37,6 +37,18 @@ namespace LAB_REPOS.MEJORES_5.LZW
                     }
                 }
             }
+            initial_list.Sort();
+            var position = 0;
+            //Chequeo de la posicion.
+            foreach (var item in initial_list)
+            {
+                Base.Add(item.ToString(), position);
+                position++;
+            }
+            foreach (var item in compress)
+            {
+                compress.Add(item.Key, item.Value);
+            }
         }
     }
 }
