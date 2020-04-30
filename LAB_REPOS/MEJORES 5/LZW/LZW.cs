@@ -7,6 +7,7 @@ namespace LAB_REPOS.MEJORES_5.LZW
 {
     public class LZW
     {
-
+        private Dictionary<string, int> compress = new Dictionary<string, int>();
+        public double bytes_compression, bytes_original;
     }
 }
