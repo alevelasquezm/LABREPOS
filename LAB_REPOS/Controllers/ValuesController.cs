@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using LAB_REPOS.MEJORES_5.CIFRADOS;
+using Microsoft.AspNetCore.Http;
+using LAB_REPOS.MEJORES_5.LZW;
 
 namespace LAB_REPOS.Controllers
 {
@@ -26,11 +28,7 @@ namespace LAB_REPOS.Controllers
 
             return "value";
         }
-
-        
         //-----------------------------------------------------ENDPOINTS PARA LAB DE CIFRADOS ZIGZAG, CESAR, DE RUTA------------------------------------------------------
-       
-            
                                                                           // C E S A R      
             // POST api/Cesar
         [Route("CifradoCesar")]
@@ -113,6 +111,19 @@ namespace LAB_REPOS.Controllers
             var lecture = Path.GetFullPath("Descifrado");
             var archivoleido2 = Path.GetFullPath(file);
             ruta.message_d(lecture, file, l, direction);
+        }
+        //-----------------------------------------------------ENDPOINT PARA LAB DE LZW------------------------------------------------------
+                                                                     // L Z W
+        // POST: api/LZW
+        [Route("Compresionlzw")]
+        [HttpPost]
+        public void PostCompresionLZW([FromForm] IFormFile Nombre)
+        {
+            LZW LZW = new LZW();
+            var arch = Path.GetFullPath(Nombre.FileName);
+            var arch1 = new FileStream(arch, FileMode.Open);
+            LZW.dictionary_initial(arch1);
+            LZW.compression_process(arch1, arch);
         }
     }
 }

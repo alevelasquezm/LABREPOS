@@ -8,8 +8,10 @@ namespace LAB_REPOS.MEJORES_5.LZW
 {
     public class LZW
     {
+        #region Definiciones
         private Dictionary<string, int> compress = new Dictionary<string, int>();
         public double bytes_compression, bytes_original;
+        #endregion
         //Llenar diccionario.
         public void dictionary_initial(FileStream file)
         {
@@ -49,7 +51,6 @@ namespace LAB_REPOS.MEJORES_5.LZW
             {
                 compress.Add(item.Key, item.Value);
             }
-
         }
         // Comprimir informacion.
         public string compact(int value, byte[] bytes, ref int position_counter, string last_position, dynamic writing)
