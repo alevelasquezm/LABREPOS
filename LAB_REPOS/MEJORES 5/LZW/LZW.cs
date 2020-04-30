@@ -84,6 +84,54 @@ namespace LAB_REPOS.MEJORES_5.LZW
             var length = 1000;
             var stream1 = new FileStream(t, FileMode.Open);
             var path = Path.GetFullPath("Comprimidos");
+            using (var reading = new BinaryReader(stream1))
+            {
+                //  Abrir o crear archivo
+                using (var writeStream = new FileStream(path, FileMode.OpenOrCreate))
+                {
+                    // Escribir los bytes.
+                    using (var writing = new BinaryWriter(writeStream))
+                    {
+                        var bytes = new byte[length];
+                        var position_counter = compress.Count;
+                        foreach (var item in compress)
+                        {
+                            writing.Write($"{item.Key}|{item.Value.ToString()}|");
+                        }
+                        writing.Write($"|");
+                        var last = string.Empty;
+                        while (reading.BaseStream.Position != reading.BaseStream.Length)
+                        {
+                            //Lectura de bytes.
+                            bytes = reading.ReadBytes(length);
+                            var a = 0;
+                            var last_position = string.Empty;
+                            if (last == string.Empty)
+                            {
+                                last_position = compact(a, bytes, ref position_counter, last_position, writing);
+                            }
+                            else
+                            {
+                                //  Informacion vacia.
+                                last_position = last;
+                                last = string.Empty;
+                                last_position = compact(a, bytes, ref position_counter, last_position, writing);
+                            }
+                            //Detecta ultima posicion.
+                            if (last_position != string.Empty)
+                            {
+                                last = last_position;
+                            }
+                        }
+                        if (last != string.Empty)
+                        {
+                            //Dato a comprimir.
+                            var v_write = compress[last];
+                            writing.Write($"{v_write}");
+                        }
+                    }
+                }
+            }
         }
     }
 }
