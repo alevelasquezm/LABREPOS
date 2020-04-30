@@ -174,6 +174,11 @@ namespace LAB_REPOS.MEJORES_5.LZW
                     break;
                 }
             }
+            //Detectar el archivo comprimido.
+            string f = n2 + ".lzw";
+            string path = Path.GetFullPath(n);
+            string p2 = Path.GetFullPath("Descomprimidos");
+            var stream1 = new FileStream(n, FileMode.Open);
         }
-        }
+    }
 }
