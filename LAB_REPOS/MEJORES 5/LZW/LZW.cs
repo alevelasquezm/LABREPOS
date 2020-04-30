@@ -78,5 +78,12 @@ namespace LAB_REPOS.MEJORES_5.LZW
             }
             return last_position;
         }
+        // Proceso para la compresion.
+        public void compression_process(FileStream stream, string t)
+        {
+            var length = 1000;
+            var stream1 = new FileStream(t, FileMode.Open);
+            var path = Path.GetFullPath("Comprimidos");
+        }
     }
 }
