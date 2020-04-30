@@ -93,6 +93,6 @@ namespace LAB_REPOS.Controllers
             ZigZag.message_dec(lecture, level, BytesList, Matrix, ExtraC);
 
         }
-
+                                                
     }
 }
