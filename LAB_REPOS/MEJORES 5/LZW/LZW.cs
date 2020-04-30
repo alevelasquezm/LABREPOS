@@ -158,5 +158,22 @@ namespace LAB_REPOS.MEJORES_5.LZW
             }
             return code;
         }
-    }
+        //Descomprimir la informacion.
+        public void descompression(string n)
+        {
+            int length = 1000;
+            string n2 = "";
+            for (int x = 0; x < n.Length; x++)
+            {
+                if (n[x] != '.')
+                {
+                    n2 += n[x];
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        }
 }
