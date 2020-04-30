@@ -49,6 +49,34 @@ namespace LAB_REPOS.MEJORES_5.LZW
             {
                 compress.Add(item.Key, item.Value);
             }
+
+        }
+        // Comprimir informacion.
+        public string compact(int value, byte[] bytes, ref int position_counter, string last_position, dynamic writing)
+        {
+            while (value < bytes.Length)
+            {
+                // Posicion actual de la informacion.
+                var actual_position = last_position + bytes[value].ToString();
+                var c = 0;
+                var p = compress.TryGetValue(actual_position, out c);
+                if (p)
+                {
+                    // Buscar ultima posicion.
+                    last_position += bytes[value].ToString();
+                }
+                else
+                {
+                    // Informacion comprimida.
+                    compress.Add(actual_position, position_counter);
+                    position_counter++;
+                    var text = compress[last_position];
+                    writing.Write($"{text}");
+                    last_position = bytes[value].ToString();
+                }
+                value++;
+            }
+            return last_position;
         }
     }
 }
