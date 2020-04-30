@@ -93,6 +93,26 @@ namespace LAB_REPOS.Controllers
             ZigZag.message_dec(lecture, level, BytesList, Matrix, ExtraC);
 
         }
-                                                
+        //DE RUTA 
+        // POST api/Spiral
+        [Route("CifradoRuta")]
+        [HttpPost]
+        public void PostCifradoRuta([FromBody] string file, int l, bool direction)
+        {
+            Route_Encryption ruta = new Route_Encryption();
+            var lecture = Path.GetFullPath("Cifrado");
+            var archivoleido2 = Path.GetFullPath(file);
+            ruta.message(lecture, file, l, direction);
+
+        }
+        [Route("DescifradoRuta")]
+        [HttpPost]
+        public void PostDescifradoRuta([FromBody] string file, int l, bool direction)
+        {
+            Route_Encryption ruta = new Route_Encryption();
+            var lecture = Path.GetFullPath("Descifrado");
+            var archivoleido2 = Path.GetFullPath(file);
+            ruta.message_d(lecture, file, l, direction);
+        }
     }
 }
