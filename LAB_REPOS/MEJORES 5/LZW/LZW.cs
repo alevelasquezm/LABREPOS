@@ -133,5 +133,30 @@ namespace LAB_REPOS.MEJORES_5.LZW
                 }
             }
         }
+        //Codificador.
+        public string coder(byte[] bytes, ref int x, ref bool r2, ref string r)
+        {
+            string code = string.Empty;
+            if (r2)
+            {
+                code += r;
+            }
+            r2 = false;
+            x++;
+            for (; x < bytes.Length; x++)
+            {
+                if (int.TryParse(((char)bytes[x]).ToString(), out int n))
+                {
+                    code += (char)bytes[x];
+                }
+                else if (x == bytes.Length - 1)
+                {
+                    r2 = true;
+                    r = code;
+                }
+                break;
+            }
+            return code;
+        }
     }
 }
