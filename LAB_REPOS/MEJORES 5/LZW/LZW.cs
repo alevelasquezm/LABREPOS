@@ -179,6 +179,99 @@ namespace LAB_REPOS.MEJORES_5.LZW
             string path = Path.GetFullPath(n);
             string p2 = Path.GetFullPath("Descomprimidos");
             var stream1 = new FileStream(n, FileMode.Open);
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                using (var reading = new BinaryReader(stream1))
+                {
+                    //Crear o abrir archivo.
+                    using (var writeStream = new FileStream(p2, FileMode.OpenOrCreate))
+                    {
+                        using (var writing = new BinaryWriter(writeStream))
+                        {
+                            {
+                                var bytes = new byte[length];
+                                var dic = false;
+                                // Manejar todos los prefijos.
+                                Dictionary<int, string> prefixes = new Dictionary<int, string>();
+
+                                while (!dic)
+                                {
+                                    // Posicion actual del diccionario.
+                                    var actual_position = "";
+                                    actual_position = reading.ReadString();
+                                    if (actual_position[0] == '|')
+                                    {
+                                        dic = true;
+                                    }
+                                    else
+                                    {
+                                        //  Contenido de la informacion
+                                        var content = actual_position.Split('|');
+                                        prefixes.Add(Convert.ToInt32(content[1]), ((char)Convert.ToInt32(content[0])).ToString());
+                                    }
+                                }
+                                string old, newest, val, r;
+                                old = newest = val = r = string.Empty;
+                                char first_val = ' ';
+                                bool r2 = false;
+                                bool first = true;
+                                int index = prefixes.Count();
+                                var index_b = 0;
+                                string outer = string.Empty;
+
+                                while (!r2)
+                                {
+                                    //  Largo de la cadena de bytes.
+                                    if (index_b == bytes.Length - 1)
+                                    {
+                                        bytes = reading.ReadBytes(length);
+                                    }
+                                    if (first)
+                                    {
+                                        // Lee los bytes.
+                                        bytes = reading.ReadBytes(length);
+                                        old = coder(bytes, ref index, ref r2, ref r);
+                                        first_val = Convert.ToChar(prefixes[(Convert.ToInt32(old))]);
+                                        outer += first_val;
+                                        writing.Write(Convert.ToChar((int)first_val));
+                                        first = false;
+                                    }
+                                    else
+                                    {
+                                        //Obtener descodificacion.
+                                        newest = coder(bytes, ref index, ref r2, ref r);
+                                        if (newest == string.Empty)
+                                        {
+                                            break;
+                                        }
+                                        string outTryGet = string.Empty;
+                                        var in_dic = prefixes.TryGetValue(Convert.ToInt32(newest), out outTryGet);
+                                        //  Si se encuentra el valor en el diccionario.
+                                        if (in_dic)
+                                        {
+                                            val = prefixes[(Convert.ToInt32(newest))];
+                                        }
+                                        else
+                                        {
+                                            val = prefixes[(Convert.ToInt32(old))];
+                                            val += first_val;
+                                        }
+                                        outer += val;
+                                        for (int a = 0; a < val.Length; a++)
+                                        {
+                                            writing.Write(Convert.ToChar((int)val[a]));
+                                        }
+                                        first_val = Convert.ToChar(val.Substring(0, 1));
+                                        prefixes.Add(index, (prefixes[(Convert.ToInt32(old))]) + first_val);
+                                        old = newest;
+                                        index++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
