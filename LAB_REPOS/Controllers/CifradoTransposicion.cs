@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using LAB_REPOS.MEJORES_5.CIFRADOS;
 using Microsoft.AspNetCore.Http;
-using LAB_REPOS.MEJORES_5.LZW;
+
 
 namespace LAB_REPOS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Cifrado : ControllerBase
+    public class CifradoTransposicion : ControllerBase
     {
         // GET api/values
         [HttpGet]
@@ -91,8 +91,8 @@ namespace LAB_REPOS.Controllers
             ZigZag.message_dec(lecture, level, BytesList, Matrix, ExtraC);
 
         }
-        //DE RUTA 
-        // POST api/Spiral
+                                                                                    //DE RUTA 
+        // POST api/Ruta
         [Route("CifradoRuta")]
         [HttpPost]
         public void PostCifradoRuta([FromBody] string file, int l, bool direction)
@@ -113,6 +113,5 @@ namespace LAB_REPOS.Controllers
             ruta.message_d(lecture, file, l, direction);
         }
 
-        }
     }
-
+}
