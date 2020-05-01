@@ -8,17 +8,19 @@ namespace LAB_REPOS.MEJORES_5.LZW
 {
     public class LZW
     {
-        #region Definiciones
         private Dictionary<string, int> compress = new Dictionary<string, int>();
         public double bytes_compression, bytes_original;
-        #endregion
         //Llenar diccionario.
         public void dictionary_initial(FileStream file)
         {
+            //var split = Nombre.Split('.');
+
+            // bytes_original = file.ContentLength;
             List<int> initial_list = new List<int>();
             Dictionary<string, int> Base = new Dictionary<string, int>();
             var length = 0;
             //Leer archivo.
+            //Stream stream = file.InputStream;
             length = 1000;
             //Lee numeros binarios.
             using (var reader = new BinaryReader(file))
@@ -100,6 +102,7 @@ namespace LAB_REPOS.MEJORES_5.LZW
                             writing.Write($"{item.Key}|{item.Value.ToString()}|");
                         }
                         writing.Write($"|");
+
                         var last = string.Empty;
                         while (reading.BaseStream.Position != reading.BaseStream.Length)
                         {
@@ -124,6 +127,7 @@ namespace LAB_REPOS.MEJORES_5.LZW
                                 last = last_position;
                             }
                         }
+
                         if (last != string.Empty)
                         {
                             //Dato a comprimir.
@@ -131,10 +135,13 @@ namespace LAB_REPOS.MEJORES_5.LZW
                             writing.Write($"{v_write}");
                         }
                     }
+
                 }
+
             }
+            TablaComprimir newElement = new TablaComprimir(t, path);
+            CheckExistence.Exist.tabla.Insert(0, newElement);
         }
-        //Codificador.
         public string coder(byte[] bytes, ref int x, ref bool r2, ref string r)
         {
             string code = string.Empty;
@@ -276,3 +283,6 @@ namespace LAB_REPOS.MEJORES_5.LZW
         }
     }
 }
+
+
+
