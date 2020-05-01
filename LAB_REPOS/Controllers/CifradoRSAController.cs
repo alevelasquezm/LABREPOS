@@ -20,19 +20,67 @@ namespace LAB_REPOS.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/CifradoRSA/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        // POST api/RSA
+        [Route("CifradoRSA")]
+        public void PostCifradoRSA([FromBody] string file1, string file2, string file)
         {
-            return "value";
+            var path1 = "";
+            var path2 = "";
+            var fileName = "";
+
+
+
+            path1 = Path.GetFullPath("Archivo");
+            fileName = Path.GetFullPath(file1);
+
+
+            path2 = Path.GetFullPath("Archivo");
+            fileName = Path.GetFullPath(file2);
+
+            var lecture = Path.GetFullPath("Archivo");
+            var lecture2 = Path.GetFullPath(file);
+            RSA_Encryption rsa = new RSA_Encryption();
+            rsa.read_text(path1, path2, lecture, fileName);
+
+
         }
 
-        // POST: api/CifradoRSA
-        [HttpPost]
-        public void Post([FromBody] string value)
+        // POST api/RSA
+        [Route("Llaves")]
+        public void GenerarLlaves([FromBody] Keys RSA, string file)
         {
-        }
+            var primo1 = RSA.numeroPrimo(RSA.ValorP, 2);
+            var primo2 = RSA.numeroPrimo(RSA.ValorQ, 2);
 
+            RSA_Encryption rsa = new RSA_Encryption();
+            var lecture = Path.GetFullPath("Archivo");
+            var lecture2 = Path.GetFullPath(file);
+            rsa.Keys(RSA.ValorP, RSA.ValorQ, lecture);
+        }
+        // POST api/RSA
+        [Route("DescifradoRSA")]
+        public void PostDescifradoRSA([FromBody] string file1, string file2, string file)
+        {
+            var path1 = "";
+            var path2 = "";
+            var fileName = "";
+
+
+
+            path1 = Path.GetFullPath("Archivo");
+            fileName = Path.GetFullPath(file1);
+
+
+            path2 = Path.GetFullPath("Archivo");
+            fileName = Path.GetFullPath(file2);
+
+            var lecture = Path.GetFullPath("Archivo");
+            var lecture2 = Path.GetFullPath(file);
+            RSA_Encryption rsa = new RSA_Encryption();
+            rsa.read_encryption(path1, path2, lecture, fileName);
+
+
+        }
 
     }
 }
