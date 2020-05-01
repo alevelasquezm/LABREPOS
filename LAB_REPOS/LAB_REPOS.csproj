@@ -5,8 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="MEJORES 5\HUFFMAN\" />
-    <Folder Include="MEJORES 5\RSA\" />
+    <Compile Remove="MEJORES 5\HUFFMAN\**" />
+    <Content Remove="MEJORES 5\HUFFMAN\**" />
+    <EmbeddedResource Remove="MEJORES 5\HUFFMAN\**" />
+    <None Remove="MEJORES 5\HUFFMAN\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MEJORES 5\ARBOL B DISCO\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
