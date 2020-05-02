@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace LAB_REPOS.MEJORES_5.ARBOL_B_DISCO
@@ -193,6 +194,88 @@ namespace LAB_REPOS.MEJORES_5.ARBOL_B_DISCO
             {
 
             }
+        }
+        public override T Obtener(string llave)
+        {
+            int posicion = -1;
+            NodoB<T> nodoObtenido = ObtenerRecursivo(_raiz, llave, out posicion);
+            if (nodoObtenido == null)
+            {
+                throw new InvalidOperationException("La llave indicada no está en el árbol.");
+            }
+            else
+            {
+                return nodoObtenido.Datos[posicion];
+            }
+        }
+        public override bool Contiene(string llave)
+        {
+            int posicion = -1;
+            NodoB<T> nodoObtenido = ObtenerRecursivo(_raiz, llave, out posicion);
+            if (nodoObtenido == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        private void EscribirNodo(NodoB<T> nodoActual, StringBuilder texto)
+        {
+            for (int i = 0; i < nodoActual.Llaves.Count; i++)
+            {
+                if (nodoActual.Llaves[i] != "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                {
+                    texto.AppendLine(nodoActual.Llaves[i].ToString());
+                    texto.AppendLine(nodoActual.Datos[i].ToString());
+                    texto.AppendLine("---------------");
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        public override string RecorrerInOrden()
+        {
+            StringBuilder texto = new StringBuilder();
+            RecorrerInOrdenRecursivo(_raiz, texto);
+            return texto.ToString();
+        }
+        private void RecorrerInOrdenRecursivo(int posicionActual, StringBuilder texto)
+        {
+            if (posicionActual == Cambios.ApuntadorVacio)
+            {
+                return;
+            }
+            NodoB<T> nodoActual = NodoB<T>.LeerNodoDesdeDisco(_archivo, _tamañoEncabezadoBinario, Orden, posicionActual, _fabrica);
+            for (int i = 0; i < nodoActual.Hijos.Count; i++)
+            {
+                RecorrerInOrdenRecursivo(nodoActual.Hijos[i], texto);
+                if ((i < nodoActual.Llaves.Count) && (nodoActual.Llaves[i] != ""))
+                {
+                    texto.AppendLine(nodoActual.Llaves[i].ToString());
+                    texto.AppendLine(nodoActual.Datos[i].ToString());
+                    texto.AppendLine("---------------");
+                }
+            }
+        }
+        public override int ObtenerAltura()
+        {
+            return Altura;
+        }
+        public override void Eliminar(string llave)
+        {
+            throw new NotImplementedException();
+        }
+        public override void Cerrar()
+        {
+            _archivo.Close();
+        }
+        public T Search(Delegate comparer, string llave)
+        {
+            return (T)comparer.DynamicInvoke(this, llave);
         }
     }
 }

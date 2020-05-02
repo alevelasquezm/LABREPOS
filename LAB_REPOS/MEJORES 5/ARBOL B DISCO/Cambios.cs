@@ -9,7 +9,7 @@ namespace LAB_REPOS.MEJORES_5.ARBOL_B_DISCO
 {
     public static class Cambios
     {
-        #region Utilidades Texto
+        #region Cambios Texto
         // Para modificar los enteros en los archivos
         internal const int TextoEnteroTamaño = 11;
         private const string TextoEnteroFormato = "00000000000;-0000000000";

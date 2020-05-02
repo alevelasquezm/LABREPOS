@@ -40,3 +40,17 @@ C:\Users\aleve\Desktop\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.Asse
 C:\Users\aleve\Desktop\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.RazorTargetAssemblyInfo.cache
 C:\Users\aleve\Desktop\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.dll
 C:\Users\aleve\Desktop\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.pdb
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\bin\Debug\netcoreapp2.1\LAB_REPOS.deps.json
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\bin\Debug\netcoreapp2.1\LAB_REPOS.runtimeconfig.json
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\bin\Debug\netcoreapp2.1\LAB_REPOS.runtimeconfig.dev.json
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\bin\Debug\netcoreapp2.1\LAB_REPOS.dll
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\bin\Debug\netcoreapp2.1\LAB_REPOS.pdb
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.csprojAssemblyReference.cache
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.csproj.CoreCompileInputs.cache
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.RazorAssemblyInfo.cache
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.RazorAssemblyInfo.cs
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.AssemblyInfoInputs.cache
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.AssemblyInfo.cs
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.RazorTargetAssemblyInfo.cache
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.dll
+C:\Users\bluea\Downloads\LABREPOS\LAB_REPOS\obj\Debug\netcoreapp2.1\LAB_REPOS.pdb
