@@ -14,5 +14,6 @@ namespace LAB_REPOS.MEJORES_5.ARBOL_B_DISCO
         public abstract bool Contiene(TLlave llave);
         public abstract string RecorrerInOrden();
         public abstract int ObtenerAltura();
+        public abstract void Cerrar();
     }
 }
