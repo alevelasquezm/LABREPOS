@@ -4,9 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
 using LAB_REPOS.MEJORES_5.RSA;
-
+using System.IO;
 namespace LAB_REPOS.Controllers
 {
     [Route("api/[controller]")]
@@ -20,7 +19,8 @@ namespace LAB_REPOS.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // POST api/RSA
+
+        // POST: api/CifradoRSA
         [Route("CifradoRSA")]
         public void PostCifradoRSA([FromBody] string file1, string file2, string file)
         {
@@ -44,7 +44,6 @@ namespace LAB_REPOS.Controllers
 
 
         }
-
         // POST api/RSA
         [Route("getPublicKey")]
         public void GenerarLlaves([FromBody] Keys RSA, string file)
@@ -81,6 +80,5 @@ namespace LAB_REPOS.Controllers
 
 
         }
-
     }
 }

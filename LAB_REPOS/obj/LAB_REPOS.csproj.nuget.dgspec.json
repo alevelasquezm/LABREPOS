@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj": {}
+    "C:\\Users\\aleve\\source\\repos\\LAB_REPOS\\LAB_REPOS\\LAB_REPOS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj": {
+    "C:\\Users\\aleve\\source\\repos\\LAB_REPOS\\LAB_REPOS\\LAB_REPOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj",
+        "projectUniqueName": "C:\\Users\\aleve\\source\\repos\\LAB_REPOS\\LAB_REPOS\\LAB_REPOS.csproj",
         "projectName": "LAB_REPOS",
-        "projectPath": "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj",
+        "projectPath": "C:\\Users\\aleve\\source\\repos\\LAB_REPOS\\LAB_REPOS\\LAB_REPOS.csproj",
         "packagesPath": "C:\\Users\\aleve\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\obj\\",
+        "outputPath": "C:\\Users\\aleve\\source\\repos\\LAB_REPOS\\LAB_REPOS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -21,14 +21,14 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp2.1"
+          "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp2.1": {
+          "netcoreapp3.1": {
             "projectReferences": {}
           }
         },
@@ -39,28 +39,15 @@
         }
       },
       "frameworks": {
-        "netcoreapp2.1": {
+        "netcoreapp3.1": {
           "dependencies": {
-            "Microsoft.AspNetCore.App": {
-              "suppressParent": "All",
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
-              "version": "[2.1.1, )",
-              "autoReferenced": true
-            },
-            "Microsoft.AspNetCore.Razor.Design": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.1.2, )"
-            },
-            "Microsoft.NETCore.App": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.1.0, )",
-              "autoReferenced": true
+              "version": "[1.9.10, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[2.1.9, )"
+              "version": "[3.1.2, )"
             }
           },
           "imports": [
@@ -73,6 +60,14 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
         }
       }

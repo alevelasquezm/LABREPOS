@@ -23,7 +23,6 @@ namespace LAB_REPOS.Controllers
             return content;
         }
 
-        // GET: api/ArbolB/5
         [Route("SearchItem")]
         [HttpGet]
         public string Get([FromBody] string brandNew)
@@ -41,13 +40,13 @@ namespace LAB_REPOS.Controllers
             }
             return found;
         }
-
         // POST: api/ArbolB
         [HttpPost]
         public void Post([FromBody] Soda item)
         {
             tree.insert(item);
         }
+
 
     }
 }

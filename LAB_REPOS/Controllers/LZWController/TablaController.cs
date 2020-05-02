@@ -4,10 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
 using LAB_REPOS.MEJORES_5.LZW;
-using LAB_REPOS.Controllers;
-
 namespace LAB_REPOS.Controllers.LZWController
 {
     [Route("api/[controller]")]
@@ -19,13 +16,6 @@ namespace LAB_REPOS.Controllers.LZWController
         public IEnumerable<TablaComprimir> Get()
         {
             return CheckExistence.Exist.tabla;
-        }
-
-        // GET: api/Tabla/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
         }
 
         // POST: api/Tabla

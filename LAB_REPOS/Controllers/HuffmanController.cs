@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using LAB_REPOS.MEJORES_5.HUFFMAN;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-
+using LAB_REPOS.MEJORES_5.HUFFMAN;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 namespace LAB_REPOS.Controllers
 {
     [Route("api/[controller]")]
@@ -26,12 +24,10 @@ namespace LAB_REPOS.Controllers
         {
             return new string[] { "value1", "value2" };
         }
-        // GET: api/Huffman/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+
+
+
+        // POST: api/Huffman
         //Maneja el factor, razon y entre otros de compresion.
         [HttpPost("TodasLasCompresionesHuffman")]
         public void Compressions()
@@ -40,7 +36,7 @@ namespace LAB_REPOS.Controllers
             {
                 Directory.CreateDirectory(information.WebRootPath + "\\Compresion_Total\\");
             }
-           Methods Writing = new Methods();
+            Methods Writing = new Methods();
             Writing.data_huffman(information.WebRootPath + "\\Compresion_Total\\");
         }
         //Compresion de Huffman.
@@ -67,6 +63,5 @@ namespace LAB_REPOS.Controllers
             huffman_method.ProcesoDecompresionHuffman(_ArchivoHUFF, information.WebRootPath + "\\Descompresiones_Huffman\\", information.WebRootPath + "\\Descompresiones_Huffman\\");
 
         }
-        
     }
 }

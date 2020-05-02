@@ -27,6 +27,5 @@ namespace LAB_REPOS.MEJORES_5.HUFFMAN
         {
             return (this.frequency > other.frequency) ? -1 : ((this.frequency == other.frequency) ? 0 : 1);
         }
-
     }
 }

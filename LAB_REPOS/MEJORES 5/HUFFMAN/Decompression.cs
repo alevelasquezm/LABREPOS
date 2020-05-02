@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace LAB_REPOS.MEJORES_5.HUFFMAN
 {
@@ -12,7 +12,7 @@ namespace LAB_REPOS.MEJORES_5.HUFFMAN
         {
             byte[] lenght = { full[0], full[1], full[2], full[3] };
             int large = BitConverter.ToInt32(lenght, 0);
-            List<N_Minimo> mins = new List<N_Minimo>();
+            List<N_minimo> mins = new List<N_minimo>();
             for (int x = 0; x < large; x++)
             {
                 byte[] bytes_letter = { full[4 + x * 9] };
@@ -29,7 +29,7 @@ namespace LAB_REPOS.MEJORES_5.HUFFMAN
                 int left2 = BitConverter.ToInt32(bytes_left, 0);
                 int right2 = BitConverter.ToInt32(bytes_left, 0);
 
-                mins.Add(new N_Minimo(letter2, left2, right2));
+                mins.Add(new N_minimo(letter2, left2, right2));
             }
             List<byte> decompressed_list = new List<byte>();
             int actual_node = 0;

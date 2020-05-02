@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-
+using System.IO;
 namespace LAB_REPOS.MEJORES_5.HUFFMAN
 {
     public class Compression
@@ -20,7 +19,7 @@ namespace LAB_REPOS.MEJORES_5.HUFFMAN
             compression_bytes(use_node.right1, list_node);
         }
         //Comprimir arbol.
-        private static N_Minimo[] tree_compression(Nodo node_root)
+        private static N_minimo[] tree_compression(Nodo node_root)
         {
             List<Nodo> ListadoDeNodos = new List<Nodo>();
             compression_bytes(node_root, ListadoDeNodos);
@@ -28,20 +27,20 @@ namespace LAB_REPOS.MEJORES_5.HUFFMAN
             {
                 ListadoDeNodos[x].id = x;
             }
-            N_Minimo[] N_Result = new N_Minimo[ListadoDeNodos.Count];
+            N_minimo[] N_Result = new N_minimo[ListadoDeNodos.Count];
             for (int y = 0; y < N_Result.Length; y++)
             {
                 if (ListadoDeNodos[y].frequency == 0)
                 {
                     int LadoIzquierdo = -2;
                     int LadoDerecho = -2;
-                    N_Result[y] = new N_Minimo(ListadoDeNodos[y].letter, LadoIzquierdo, LadoDerecho);
+                    N_Result[y] = new N_minimo(ListadoDeNodos[y].letter, LadoIzquierdo, LadoDerecho);
                 }
                 else
                 {
                     int left = (ListadoDeNodos[y].left1 == null) ? -1 : ListadoDeNodos[y].left1.id;
                     int right = (ListadoDeNodos[y].right1 == null) ? -1 : ListadoDeNodos[y].right1.id;
-                    N_Result[y] = new N_Minimo(ListadoDeNodos[y].letter, left, right);
+                    N_Result[y] = new N_minimo(ListadoDeNodos[y].letter, left, right);
                 }
             }
             return N_Result;
@@ -51,13 +50,13 @@ namespace LAB_REPOS.MEJORES_5.HUFFMAN
         {
             List<byte> ListadoDeBytes = new List<byte>();
 
-            N_Minimo[] minimoNodos = tree_compression(NodoRaizArbol);
+            N_minimo[] minimoNodos = tree_compression(NodoRaizArbol);
 
             byte[] CapacidadDelByte = BitConverter.GetBytes(minimoNodos.Length);
 
             ListadoDeBytes.AddRange(CapacidadDelByte);
 
-            foreach (N_Minimo value in minimoNodos)
+            foreach (N_minimo value in minimoNodos)
             {
                 byte LetraABytes = value.letter;
                 byte[] BytesLadoIzquierdo = BitConverter.GetBytes(value.left);
@@ -144,7 +143,7 @@ namespace LAB_REPOS.MEJORES_5.HUFFMAN
                 }
                 else
                 {
-                    DiccionarioNuevoCaracteres.Add(NodoACodificar.letter, CodigoAUtilizar); 
+                    DiccionarioNuevoCaracteres.Add(NodoACodificar.letter, CodigoAUtilizar);
                 }
             }
             code_assignation(DiccionarioNuevoCaracteres, NodoACodificar.right1, CodigoHijoDerecho, ListadoDeCaracteres);

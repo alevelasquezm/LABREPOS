@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace LAB_REPOS.MEJORES_5.HUFFMAN
 {
     public class Methods
