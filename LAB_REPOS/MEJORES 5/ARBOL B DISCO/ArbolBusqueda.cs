@@ -5,15 +5,23 @@ using System.Threading.Tasks;
 
 namespace LAB_REPOS.MEJORES_5.ARBOL_B_DISCO
 {
-    public abstract class ArbolBusqueda<TLlave, T> where TLlave : IComparable
+    public class ArbolBusqueda
     {
-        public int Tamaño { get; protected set; }
-        public abstract void Agregar(TLlave llave, T dato, string llaveAux);
-        public abstract void Eliminar(TLlave llave);
-        public abstract T Obtener(TLlave llave);
-        public abstract bool Contiene(TLlave llave);
-        public abstract string RecorrerInOrden();
-        public abstract int ObtenerAltura();
-        public abstract void Cerrar();
+        #region Definiciones
+        public int grade;
+        public Delegate node;
+        public Delegate string_;
+        public string path;
+        public int key;
+        #endregion
+        private static ArbolBusqueda _instance = null;
+        public static ArbolBusqueda Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = new ArbolBusqueda();
+                return _instance;
+            }
+        }
     }
 }

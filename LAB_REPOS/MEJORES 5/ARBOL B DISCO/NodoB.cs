@@ -7,376 +7,120 @@ using System.Threading.Tasks;
 
 namespace LAB_REPOS.MEJORES_5.ARBOL_B_DISCO
 {
-    public class NodoB<T> where T : TextoFijo
+    public class NodoB<T>
     {
         #region Definiciones
-        public const int Minimo = 3;
-        public const int Maximo = 99;
-        internal int Orden { get; private set; }
-        internal int Posicion { get; private set; }
-        internal int Padre { get; set; }
-        internal List<int> Hijos { get; set; }
-        internal List<string> Llaves { get; set; }
-        internal List<T> Datos { get; set; }
+        public int index;
+        public int Father;
+        public int cant;
+        public List<int> Sons = new List<int>();
+        public List<T> Values = new List<T>();
+        static int lenght = 500;
         #endregion
-        internal int CantidadDatos
+        public NodoB(int father_)
         {
-            get
+            if (father_ != 0)
             {
-                int i = 0;
-                while (i < Llaves.Count && Llaves[i] != "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                cant = ArbolBusqueda.Instance.grade - 1;
+            }
+            else
+            {
+                cant = (4 * (ArbolBusqueda.Instance.grade - 1) / 3);
+            }
+            this.Father = father_;
+        }
+        static string bufferToString(byte[] line)
+        {
+            var auxiliar = string.Empty;
+            foreach (var character in line)
+            {
+                auxiliar += (char)character;
+            }
+            return auxiliar;
+        }
+        static byte[] stringToBuffer(string line2)
+        {
+            var auxiliar2 = new List<byte>();
+            foreach (var character2 in line2)
+            {
+                auxiliar2.Add((byte)character2);
+            }
+            return auxiliar2.ToArray();
+        }
+        //Nos permite convertir la informacion de string a un nodo normal.
+        public static NodoB<T> StringToNodo(int position)
+        {
+            var cant_sons = ((4 * (ArbolBusqueda.Instance.grade - 1)) / 3) + 1;
+            var cant_characters = 8 + (4 * cant_sons) + (lenght * (cant_sons - 1));
+
+            //Leer la linea de archivo de texto que contiene el nodo
+            var buffer_l = new byte[cant_characters];
+            using (var files = new FileStream(ArbolBusqueda.Instance.path, FileMode.OpenOrCreate))
+            {
+                files.Seek((position - 1) * cant_characters + 15, SeekOrigin.Begin);
+                files.Read(buffer_l, 0, cant_characters);
+            }
+            var nodeString = bufferToString(buffer_l);
+            //Dividir los valores para llenar el nodo que se va a utilizar
+            var values = new List<string>();
+            for (int i = 0; i < cant_sons + 2; i++)
+            {
+                values.Add(nodeString.Substring(0, 4));
+                nodeString = nodeString.Substring(4);
+            }
+            for (int i = 0; i < cant_sons - 1; i++)
+            {
+                values.Add(nodeString.Substring(0, lenght));
+                nodeString = nodeString.Substring(lenght);
+            }
+            var node_out = new NodoB<T>(Convert.ToInt32(values[1]));
+            node_out.index = Convert.ToInt32(values[0]);
+            for (int i = 2; i < (2 + cant_sons); i++)
+            {
+                if (values[i].Trim() != "-")
                 {
-                    i++;
-                }
-                return i;
-            }
-        }
-        internal bool Underflow
-        {
-            get
-            {
-                return (CantidadDatos < ((Orden / 2) - 1));
-            }
-        }
-        internal bool Lleno
-        {
-            get
-            {
-                return (CantidadDatos >= Orden - 1);
-            }
-        }
-        internal bool EsHoja
-        {
-            get
-            {
-                bool EsHoja = true;
-                for (int i = 0; i < Hijos.Count; i++)
-                {
-                    if (Hijos[i] != Cambios.ApuntadorVacio)
-                    {
-                        EsHoja = false;
-                        break;
-                    }
-                }
-                return EsHoja;
-            }
-        }
-        internal int TamañoEnTexto
-        {
-            get
-            {
-                int tamañoEnTexto = 0;
-                tamañoEnTexto += Cambios.TextoEnteroTamaño + 1; // Tamaño del indicador de posición 
-                tamañoEnTexto += Cambios.TextoEnteroTamaño + 1; // Tamaño del apuntador al padre 
-                tamañoEnTexto += 2; // Separadores extras
-                tamañoEnTexto += (Cambios.TextoEnteroTamaño + 1) * Orden; // Tamaño de los hijos 
-                tamañoEnTexto += 2; // Separadores extras 
-                tamañoEnTexto += (Cambios.TextoLlaveTamaño + 1) * (Orden - 1); // Tamaño de las llaves 
-                tamañoEnTexto += 2; // Separadores extras
-                tamañoEnTexto += (Datos[0].FixedSizeText + 1) * (Orden - 1); // Tamaño de los datos 
-                tamañoEnTexto += Cambios.TextoNuevaLineaTamaño; // Tamaño del enter 
-                return tamañoEnTexto;
-            }
-        }
-        internal int TamañoEnBytes
-        {
-            get
-            {
-                return TamañoEnTexto * Cambios.BinarioCaracterTamaño;
-            }
-        }
-        private void LimpiarNodo(TextoFabrica<T> fabrica)
-        {
-            Hijos = new List<int>();
-
-            for (int i = 0; i < Orden; i++)
-            {
-                Hijos.Add(Cambios.ApuntadorVacio);
-            }
-
-            Llaves = new List<string>();
-
-            for (int i = 0; i < Orden - 1; i++)
-            {
-                Llaves.Add("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-            }
-
-            Datos = new List<T>();
-
-            for (int i = 0; i < Orden - 1; i++)
-            {
-                Datos.Add(fabrica.FabricarNulo());
-            }
-        }
-        internal NodoB(int orden, int posicion, int padre, TextoFabrica<T> fabrica)
-        {
-            if ((orden < Minimo) || (orden > Maximo)) { throw new ArgumentOutOfRangeException("orden"); }
-            if (posicion < 0) { throw new ArgumentOutOfRangeException("posicion"); }
-            Orden = orden; Posicion = posicion; Padre = padre;
-            LimpiarNodo(fabrica);
-        }
-        private int CalcularPosicionEnDisco(int tamañoEncabezado)
-        {
-            return tamañoEncabezado + (Posicion * TamañoEnBytes);
-        }
-        private string ConvertirATextoTamañoFijo()
-        {
-            StringBuilder datosCadena = new StringBuilder();
-            datosCadena.Append(Cambios.FormatearEntero(Posicion));
-            datosCadena.Append(Cambios.TextoSeparador);
-            datosCadena.Append(Cambios.FormatearEntero(Padre));
-            datosCadena.Append(Cambios.TextoSeparador);
-            datosCadena.Append(Cambios.TextoSeparador);
-            datosCadena.Append(Cambios.TextoSeparador);
-
-            for (int i = 0; i < Hijos.Count; i++)
-            {
-                datosCadena.Append(Cambios.FormatearEntero(Hijos[i]));
-                datosCadena.Append(Cambios.TextoSeparador);
-            }
-
-            datosCadena.Append(Cambios.TextoSeparador);
-            datosCadena.Append(Cambios.TextoSeparador);
-
-            for (int i = 0; i < Llaves.Count; i++)
-            {
-                datosCadena.Append(Cambios.FormatearLlave(Llaves[i]));
-                datosCadena.Append(Cambios.TextoSeparador);
-            }
-            datosCadena.Append(Cambios.TextoSeparador);
-            datosCadena.Append(Cambios.TextoSeparador);
-
-            for (int i = 0; i < Datos.Count; i++)
-            {
-                datosCadena.Append(Datos[i].ToFixedSizeString().Replace(Cambios.TextoSeparador, Cambios.TextoSustitutoSeparador));
-                datosCadena.Append(Cambios.TextoSeparador);
-            }
-            datosCadena.Append(Cambios.TextoNuevaLinea);
-            return datosCadena.ToString();
-        }
-        private byte[] ObtenerBytes()
-        {
-            byte[] datosBinarios = null;
-            datosBinarios = Cambios.ConvertirBinarioYTexto(ConvertirATextoTamañoFijo());
-            return datosBinarios;
-        }
-        internal static NodoB<T> LeerNodoDesdeDisco(FileStream archivo, int tamañoEncabezado, int orden, int posicion, TextoFabrica<T> fabrica)
-        {
-            if (archivo == null)
-            {
-                throw new ArgumentNullException("archivo");
-            }
-            if (tamañoEncabezado < 0)
-            {
-                throw new ArgumentOutOfRangeException("tamañoEncabezado");
-            }
-            if ((orden < Minimo) || (orden > Maximo))
-            {
-                throw new ArgumentOutOfRangeException("orden");
-            }
-            if (posicion < 0)
-            {
-                throw new ArgumentOutOfRangeException("posicion");
-            }
-            if (fabrica == null)
-            {
-                throw new ArgumentNullException("fabrica");
-            }
-            // Se crea un nodo nulo para poder acceder a las propiedades de tamaño calculadas sobre la instancia 
-
-            // Dato de la instancia del nodo
-            NodoB<T> nuevoNodo = new NodoB<T>(orden, posicion, 0, fabrica);
-            // Se crea un buffer donde se almacenarán los bytes leidos 
-            byte[] datosBinario = new byte[nuevoNodo.TamañoEnBytes];
-            // Variables a ser utilizadas luego de que el archivo sea leido 
-            string datosCadena = "";
-            string[] datosSeparados = null;
-            int PosicionEnDatosCadena = 1;
-            // Se ubica la posición donde deberá estar el nodo y se lee desde el archivo 
-            archivo.Seek(nuevoNodo.CalcularPosicionEnDisco(tamañoEncabezado), SeekOrigin.Begin);
-            archivo.Read(datosBinario, 0, nuevoNodo.TamañoEnBytes);
-            // Se convierten los bytes leidos del archivo a una cadena 
-            datosCadena = Cambios.ConvertirBinarioYTexto(datosBinario);
-            // Se quitan los saltos de línea y se separa en secciones 
-            datosCadena = datosCadena.Replace(Cambios.TextoNuevaLinea, "");
-            datosCadena = datosCadena.Replace("".PadRight(3, Cambios.TextoSeparador), Cambios.TextoSeparador.ToString());
-            datosSeparados = datosCadena.Split(Cambios.TextoSeparador);
-            // Se obtiene la posición del Padre 
-            nuevoNodo.Padre = Convert.ToInt32(datosSeparados[PosicionEnDatosCadena]);
-            PosicionEnDatosCadena++;
-            // Se asignan al nodo vacío los hijos desde la cadena separada 
-            for (int i = 0; i < nuevoNodo.Hijos.Count; i++)
-            {
-                nuevoNodo.Hijos[i] = Convert.ToInt32(datosSeparados[PosicionEnDatosCadena]);
-                PosicionEnDatosCadena++;
-            }
-            // Se asignan al nodo vacío las llaves desde la cadena separada 
-            for (int i = 0; i < nuevoNodo.Llaves.Count; i++)
-            {
-                nuevoNodo.Llaves[i] = datosSeparados[PosicionEnDatosCadena];
-                PosicionEnDatosCadena++;
-            }
-            // Se asignan al nodo vacío los datos la cadena separada 
-            for (int i = 0; i < nuevoNodo.Datos.Count; i++)
-            {
-                datosSeparados[PosicionEnDatosCadena] = datosSeparados[PosicionEnDatosCadena].Replace(Cambios.TextoSustitutoSeparador, Cambios.TextoSeparador);
-                nuevoNodo.Datos[i] = fabrica.Fabricar(datosSeparados[PosicionEnDatosCadena]);
-                PosicionEnDatosCadena++;
-            }
-            // Se retorna el nodo luego de agregar toda la información 
-            return nuevoNodo;
-        }
-        internal void GuardarNodoEnDisco(FileStream archivo, int tamañoEncabezado)
-        {
-            // Se ubica la posición donde se debe escribir 
-            archivo.Seek(CalcularPosicionEnDisco(tamañoEncabezado), SeekOrigin.Begin);
-            // Se escribe al archivo y se fuerza a vaciar el buffer 
-            archivo.Write(ObtenerBytes(), 0, TamañoEnBytes);
-            archivo.Flush();
-        }
-        internal void LimpiarNodoEnDisco(FileStream archivo, int tamañoEncabezado, TextoFabrica<T> fabrica)
-        {
-            // Se limpia el contenido del nodo 
-            LimpiarNodo(fabrica);
-            // Se guarda en disco el objeto que ha sido limpiado 
-            GuardarNodoEnDisco(archivo, tamañoEncabezado);
-        }
-        internal int PosicionAproximadaEnNodo(string llave)
-        {
-            int posicion = Llaves.Count;
-            int llaveBuscar = GetNumericString(llave);
-            for (int i = 0; i < Llaves.Count; i++)
-            {
-                int llaveArbol = GetNumericString(Llaves[i]);
-                if (llaveArbol > llaveBuscar || (Llaves[i] == "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"))
-                {
-                    posicion = i;
-                    break;
+                    node_out.Sons.Add(Convert.ToInt32(values[i]));
                 }
             }
-            return posicion;
-        }
-        internal int GetNumericString(string llave)
-        {
-            var chars = llave.ToCharArray();
-            int result = 0;
-            for (int i = 0; i < chars.Length; i++)
+            for (int i = (2 + cant_sons); i < (1 + (2 * cant_sons)); i++)
             {
-                result += (int)chars[i];
-            }
-            return result;
-        }
-        internal int PosicionExactaEnNodo(string llave)
-        {
-            int posicion = -1;
-            for (int i = 0; i < Llaves.Count; i++)
-            {
-                string temp = Llaves[i];
-                if (llave.Trim() == temp.Trim('x'))
+                if (values[i].Trim() != "-")
                 {
-                    posicion = i;
-                    break;
+                    node_out.Values.Add((T)ArbolBusqueda.Instance.node.DynamicInvoke(values[i]));
                 }
             }
-            return posicion;
+            return node_out;
         }
-        internal void AgregarDato(string llave, T dato, int hijoDerecho)
+        //Nos permite convertir la informacion de nodo normal a string.
+        public void NodoToString()
         {
-            AgregarDato(llave, dato, hijoDerecho, true);
-        }
-        internal void AgregarDato(string llave, T dato, int hijoDerecho, bool ValidarLleno)
-        {
-            if (Lleno && ValidarLleno)
+            string sons = string.Empty;
+            string data = string.Empty;
+            var cant_sons2 = ((4 * (ArbolBusqueda.Instance.grade - 1)) / 3) + 1;
+            foreach (var item in Sons)
             {
-                throw new IndexOutOfRangeException("El nodo está lleno, ya no puede insertar más datos");
+                sons += item.ToString("0000;-0000");
             }
-            if (llave == "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            for (int i = Sons.Count; i < cant_sons2; i++)
             {
-                throw new ArgumentOutOfRangeException("llave");
+                sons += string.Format("{0,-4}", "-");
             }
-            // Se ubica la posición para insertar, en el punto donde se encuentre el primer registro mayor que la llave.
-            int posicionParaInsertar = 0;
-
-            posicionParaInsertar = PosicionAproximadaEnNodo(llave);
-            // Corrimiento de hijos 
-            for (int i = Hijos.Count - 1; i > posicionParaInsertar + 1; i--)
+            foreach (var item in Values)
             {
-                Hijos[i] = Hijos[i - 1];
+                data += Convert.ToString(ArbolBusqueda.Instance.string_.DynamicInvoke(item));
             }
-
-            Hijos[posicionParaInsertar + 1] = hijoDerecho;
-            // Corrimiento de llaves 
-            for (int i = Llaves.Count - 1; i > posicionParaInsertar; i--)
+            for (int i = Values.Count; i < (cant_sons2 - 1); i++)
             {
-                Llaves[i] = Llaves[i - 1];
-                Datos[i] = Datos[i - 1];
+                data += string.Format("{0,-500}", "-");
             }
-            Llaves[posicionParaInsertar] = Cambios.FormatearLlave(llave);
-            Datos[posicionParaInsertar] = dato;
-        }
-        internal void AgregarDato(string llave, T dato)
-        {
-            AgregarDato(llave, dato, Cambios.ApuntadorVacio);
-        }
-        internal void EliminarDato(string llave)
-        {
-            if (!EsHoja)
+            var p = data.Length;
+            var node_char = $"{index.ToString("0000;-0000")}{Father.ToString("0000;-0000")}{sons}{data}";
+            var cant_characters2 = 8 + (4 * cant_sons2) + (lenght * (cant_sons2 - 1));
+            using (var file_s2 = new FileStream(ArbolBusqueda.Instance.path, FileMode.OpenOrCreate))
             {
-                throw new Exception("Solo pueden eliminarse llaves en nodos hoja");
+                file_s2.Seek((index - 1) * cant_characters2 + 15, SeekOrigin.Begin);
+                file_s2.Write(stringToBuffer(node_char), 0, cant_characters2);
             }
-            // Se ubica la posición para eliminar, en el punto donde se encuentre el registro igual a la llave. 
-            int posicionParaEliminar = -1;
-            posicionParaEliminar = PosicionExactaEnNodo(llave);
-            // La llave no está contenida en el nodo  
-            if (posicionParaEliminar == -1)
-            {
-                throw new ArgumentException("No puede eliminarse ya que no existe la llave en el nodo");
-            }
-            // Corrimiento de llaves y datos 
-            for (int i = Llaves.Count - 1; i > posicionParaEliminar; i--)
-            {
-                Llaves[i - 1] = Llaves[i];
-                Datos[i - 1] = Datos[i];
-            }
-            Llaves[Llaves.Count - 1] = "";
-        }
-        internal void SepararNodo(string llave, T dato, int hijoDerecho, NodoB<T> nuevoNodo, ref string llavePorSubir, ref T datoPorSubir)
-        {
-            if (!Lleno)
-            {
-                throw new Exception("Uno nodo solo puede separarse si está lleno");
-            }
-            // Incrementar el tamaño de las listas en una posición 
-            Llaves.Add("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-            Datos.Add(dato);
-            Hijos.Add(Cambios.ApuntadorVacio);
-            // Agregar los nuevos elementos en orden 
-            AgregarDato(llave, dato, hijoDerecho, false);
-            // Obtener los valores a subir 
-            int mitad = (Orden / 2);
-            llavePorSubir = Cambios.FormatearLlave(Llaves[mitad]);
-            datoPorSubir = Datos[mitad];
-            Llaves[mitad] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-            // Llenar las llaves y datos que pasan al nuevo nodo 
-            int j = 0;
-            for (int i = mitad + 1; i < Llaves.Count; i++)
-            {
-                nuevoNodo.Llaves[j] = Llaves[i];
-                nuevoNodo.Datos[j] = Datos[i];
-                Llaves[i] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-                j++;
-            }
-            // Llenar los hijos que pasan al nuevo nodo 
-            j = 0;
-            for (int i = mitad + 1; i < Hijos.Count; i++)
-            {
-                nuevoNodo.Hijos[j] = Hijos[i];
-                Hijos[i] = Cambios.ApuntadorVacio;
-                j++;
-            }
-            Llaves.RemoveAt(Llaves.Count - 1);
-            Datos.RemoveAt(Datos.Count - 1);
-            Hijos.RemoveAt(Hijos.Count - 1);
         }
     }
 }
