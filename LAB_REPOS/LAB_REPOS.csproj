@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MEJORES 5\ARBOL B DISCO\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
