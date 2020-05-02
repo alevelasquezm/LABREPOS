@@ -241,6 +241,142 @@ namespace LAB_REPOS.MEJORES_5.ARBOL_B_DISCO
             // Se guarda en disco el objeto que ha sido limpiado 
             GuardarNodoEnDisco(archivo, tamañoEncabezado);
         }
+        internal int PosicionAproximadaEnNodo(string llave)
+        {
+            int posicion = Llaves.Count;
+            int llaveBuscar = GetNumericString(llave);
+            for (int i = 0; i < Llaves.Count; i++)
+            {
+                int llaveArbol = GetNumericString(Llaves[i]);
+                if (llaveArbol > llaveBuscar || (Llaves[i] == "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"))
+                {
+                    posicion = i;
+                    break;
+                }
+            }
+            return posicion;
+        }
+        internal int GetNumericString(string llave)
+        {
+            var chars = llave.ToCharArray();
+            int result = 0;
+            for (int i = 0; i < chars.Length; i++)
+            {
+                result += (int)chars[i];
+            }
+            return result;
+        }
+        internal int PosicionExactaEnNodo(string llave)
+        {
+            int posicion = -1;
+            for (int i = 0; i < Llaves.Count; i++)
+            {
+                string temp = Llaves[i];
+                if (llave.Trim() == temp.Trim('x'))
+                {
+                    posicion = i;
+                    break;
+                }
+            }
+            return posicion;
+        }
+        internal void AgregarDato(string llave, T dato, int hijoDerecho)
+        {
+            AgregarDato(llave, dato, hijoDerecho, true);
+        }
+        internal void AgregarDato(string llave, T dato, int hijoDerecho, bool ValidarLleno)
+        {
+            if (Lleno && ValidarLleno)
+            {
+                throw new IndexOutOfRangeException("El nodo está lleno, ya no puede insertar más datos");
+            }
+            if (llave == "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            {
+                throw new ArgumentOutOfRangeException("llave");
+            }
+            // Se ubica la posición para insertar, en el punto donde se encuentre el primer registro mayor que la llave.
+            int posicionParaInsertar = 0;
 
+            posicionParaInsertar = PosicionAproximadaEnNodo(llave);
+            // Corrimiento de hijos 
+            for (int i = Hijos.Count - 1; i > posicionParaInsertar + 1; i--)
+            {
+                Hijos[i] = Hijos[i - 1];
+            }
+
+            Hijos[posicionParaInsertar + 1] = hijoDerecho;
+            // Corrimiento de llaves 
+            for (int i = Llaves.Count - 1; i > posicionParaInsertar; i--)
+            {
+                Llaves[i] = Llaves[i - 1];
+                Datos[i] = Datos[i - 1];
+            }
+            Llaves[posicionParaInsertar] = Cambios.FormatearLlave(llave);
+            Datos[posicionParaInsertar] = dato;
+        }
+        internal void AgregarDato(string llave, T dato)
+        {
+            AgregarDato(llave, dato, Cambios.ApuntadorVacio);
+        }
+        internal void EliminarDato(string llave)
+        {
+            if (!EsHoja)
+            {
+                throw new Exception("Solo pueden eliminarse llaves en nodos hoja");
+            }
+            // Se ubica la posición para eliminar, en el punto donde se encuentre el registro igual a la llave. 
+            int posicionParaEliminar = -1;
+            posicionParaEliminar = PosicionExactaEnNodo(llave);
+            // La llave no está contenida en el nodo  
+            if (posicionParaEliminar == -1)
+            {
+                throw new ArgumentException("No puede eliminarse ya que no existe la llave en el nodo");
+            }
+            // Corrimiento de llaves y datos 
+            for (int i = Llaves.Count - 1; i > posicionParaEliminar; i--)
+            {
+                Llaves[i - 1] = Llaves[i];
+                Datos[i - 1] = Datos[i];
+            }
+            Llaves[Llaves.Count - 1] = "";
+        }
+        internal void SepararNodo(string llave, T dato, int hijoDerecho, NodoB<T> nuevoNodo, ref string llavePorSubir, ref T datoPorSubir)
+        {
+            if (!Lleno)
+            {
+                throw new Exception("Uno nodo solo puede separarse si está lleno");
+            }
+            // Incrementar el tamaño de las listas en una posición 
+            Llaves.Add("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+            Datos.Add(dato);
+            Hijos.Add(Cambios.ApuntadorVacio);
+            // Agregar los nuevos elementos en orden 
+            AgregarDato(llave, dato, hijoDerecho, false);
+            // Obtener los valores a subir 
+            int mitad = (Orden / 2);
+            llavePorSubir = Cambios.FormatearLlave(Llaves[mitad]);
+            datoPorSubir = Datos[mitad];
+            Llaves[mitad] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+            // Llenar las llaves y datos que pasan al nuevo nodo 
+            int j = 0;
+            for (int i = mitad + 1; i < Llaves.Count; i++)
+            {
+                nuevoNodo.Llaves[j] = Llaves[i];
+                nuevoNodo.Datos[j] = Datos[i];
+                Llaves[i] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+                j++;
+            }
+            // Llenar los hijos que pasan al nuevo nodo 
+            j = 0;
+            for (int i = mitad + 1; i < Hijos.Count; i++)
+            {
+                nuevoNodo.Hijos[j] = Hijos[i];
+                Hijos[i] = Cambios.ApuntadorVacio;
+                j++;
+            }
+            Llaves.RemoveAt(Llaves.Count - 1);
+            Datos.RemoveAt(Datos.Count - 1);
+            Hijos.RemoveAt(Hijos.Count - 1);
+        }
     }
 }
