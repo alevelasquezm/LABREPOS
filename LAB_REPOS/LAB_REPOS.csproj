@@ -5,13 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="MEJORES 5\HUFFMAN\**" />
-    <Content Remove="MEJORES 5\HUFFMAN\**" />
-    <EmbeddedResource Remove="MEJORES 5\HUFFMAN\**" />
-    <None Remove="MEJORES 5\HUFFMAN\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Folder Include="MEJORES 5\HUFFMAN\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
