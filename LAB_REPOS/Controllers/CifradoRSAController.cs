@@ -46,7 +46,7 @@ namespace LAB_REPOS.Controllers
         }
 
         // POST api/RSA
-        [Route("Llaves")]
+        [HttpGet("getPublicKey")]
         public void GenerarLlaves([FromBody] Keys RSA, string file)
         {
             var primo1 = RSA.numeroPrimo(RSA.ValorP, 2);
