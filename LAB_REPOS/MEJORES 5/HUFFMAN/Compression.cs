@@ -7,6 +7,6 @@ namespace LAB_REPOS.MEJORES_5.HUFFMAN
 {
     public class Compression
     {
-
+       
     }
 }
