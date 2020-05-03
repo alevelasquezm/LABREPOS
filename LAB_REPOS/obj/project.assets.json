@@ -12542,23 +12542,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\aleve\\.nuget\\packages\\": {},
+    "C:\\Users\\bluea\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj",
+      "projectUniqueName": "C:\\Users\\bluea\\Downloads\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj",
       "projectName": "LAB_REPOS",
-      "projectPath": "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj",
-      "packagesPath": "C:\\Users\\aleve\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\obj\\",
+      "projectPath": "C:\\Users\\bluea\\Downloads\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj",
+      "packagesPath": "C:\\Users\\bluea\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\bluea\\Downloads\\LABREPOS\\LAB_REPOS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\aleve\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\bluea\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

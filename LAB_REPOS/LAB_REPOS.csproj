@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="MEJORES 5\HUFFMAN\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
