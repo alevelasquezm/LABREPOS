@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bluea\\Downloads\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj": {}
+    "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bluea\\Downloads\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj": {
+    "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bluea\\Downloads\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj",
+        "projectUniqueName": "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj",
         "projectName": "LAB_REPOS",
-        "projectPath": "C:\\Users\\bluea\\Downloads\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj",
-        "packagesPath": "C:\\Users\\bluea\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bluea\\Downloads\\LABREPOS\\LAB_REPOS\\obj\\",
+        "projectPath": "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\LAB_REPOS.csproj",
+        "packagesPath": "C:\\Users\\aleve\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aleve\\Desktop\\REPOSITORIO\\LABREPOS\\LAB_REPOS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\bluea\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\aleve\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -73,7 +73,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
