@@ -19,7 +19,7 @@ namespace LAB_REPOS.Controllers
         [HttpGet]
         public string Get()
         {
-            var content = "Ingresar" + path.InOrder();
+            var content = "Ingresar /SearchItem" + path.InOrder();
             return content;
         }
 
